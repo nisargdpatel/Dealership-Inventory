@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "253273488270",
+    "firebase_url": "https://dealership-inventory-12432.firebaseio.com",
+    "project_id": "dealership-inventory-12432",
+    "storage_bucket": "dealership-inventory-12432.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253273488270:android:415ec65d640f641a7ac2df",
+        "android_client_info": {
+          "package_name": "com.example.dealershipinventory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253273488270-ie740t5a6ingestekhdeiq657g3j3ulr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDloBTpvao1ZSnt6hpfJUtNwyEIfkNRdJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253273488270-ie740t5a6ingestekhdeiq657g3j3ulr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
