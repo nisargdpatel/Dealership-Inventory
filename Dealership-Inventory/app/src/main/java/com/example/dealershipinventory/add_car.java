@@ -86,8 +86,8 @@ public class add_car extends AppCompatActivity {
 
 
         //Assigning Condition Data
-        conditionList.add("New");
-        conditionList.add("Used");
+        conditionList.add("NEW");
+        conditionList.add("USED");
 
         //Assigning Color Data;
         colorList.add("BLUE");
@@ -223,7 +223,7 @@ public class add_car extends AppCompatActivity {
                     // ChosenYear,
                     // ChosenMileage,
                     // ChosenColor,
-                    // Chosen Condition
+                    // ChosencarCondition
                     //LASTLY CHANGE INTENT TO THE MAIN RECYCLER VIEW ACTIVITY
                 }
             }
