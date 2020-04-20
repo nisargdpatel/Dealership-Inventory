@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title = "User Authentication">
+        <menu>
+            <item
+                android:id="@+id/login"
+                android:icon="@drawable/logouticon"
+                android:title="Login"></item>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/loginicon"
+                android:title="Logout"></item>
+            <item
+                android:id="@+id/signup"
+                android:icon="@drawable/signuplogo"
+                android:title="Sign Up" />
+        </menu>
+    </item>
+</menu>
