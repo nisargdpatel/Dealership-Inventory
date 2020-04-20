@@ -15,14 +15,18 @@
             android:name=".DealerActivity"
             android:label="@string/title_activity_dealer"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
         <activity android:name=".CarDetails"></activity>
+        <activity android:name=".SearchActivty"></activity>
+        <activity android:name=".Login">
+
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class DealerActivity extends AppCompatActivity {
+public class DealerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     RecyclerView carLists;         //List of Notes in Content Main
 
@@ -33,18 +36,47 @@ public class DealerActivity extends AppCompatActivity {
     FirebaseUser user;              //User's profile information
     FirebaseAuth fAuth;             //Entry point of the Firebase Authentication SDK
 
+    Spinner priceSpinner, conditionSpinner, yearSpinner, makeSpinner, colorSpinner, modelSpinner, mileageSpinner;
+    Button searchButton;
+
+    int upperPriceBound;
+    int lowerPriceBound;
+    int upperMileageBound;
+    int lowerMileagebound;
+    int upperYearBound;
+    int lowerYearBound;
 
 
+//    List<String> allMake = new ArrayList<>();
+//    List<String> hondaMake = new ArrayList<>();
+//    List<String> toyotaMake = new ArrayList<>();
+//    List<String> nissanMake = new ArrayList<>();
+//
+//    List<String> allPrice = new ArrayList<>();
+//    List<String> allCondition = new ArrayList<>();
+//    List<String> allYear = new ArrayList<>();
+//    List<String> allMileage = new ArrayList<>();
+//    List<String> allColor = new ArrayList<>();
+//    List<String> anyModel = new ArrayList<>();
+//
+//    ArrayAdapter<String> adapterMake;
+//    ArrayAdapter<String> adapterHonda;
+//    ArrayAdapter<String> adapterToyota;
+//    ArrayAdapter<String> adapterNissan;
+//    ArrayAdapter<String> adapterPrice;
+//    ArrayAdapter<String> adapterCondition;
+//    ArrayAdapter<String> adapterYear;
+//    ArrayAdapter<String> adapterMileage;
+//    ArrayAdapter<String> adapterColor;
+//    ArrayAdapter<String> adapterAnyModel;
 
-//    List<String> make = new ArrayList<>();
-//    List<String> model = new ArrayList<>();
-//    List<String> price = new ArrayList<>();
-//    List<String> condition = new ArrayList<>();
-//    List<String> year = new ArrayList<>();
-//    List<String> mileage = new ArrayList<>();
-//    List<String> color = new ArrayList<>();
 
 //    Adapter adapter;
+
+    FloatingActionButton addCarFloat;
+
+
+
 
     View headerView;
     Query query;
@@ -55,76 +87,62 @@ public class DealerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dealer);
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        user = fAuth.getCurrentUser();
 
-        fAuth.signInWithEmailAndPassword("nisargp@umich.edu", "123456");
+        priceSpinner = findViewById(R.id.priceSearch);
+        conditionSpinner = findViewById(R.id.conditionSearch);
+        yearSpinner = findViewById(R.id.yearSearch);
+        makeSpinner = findViewById(R.id.makeSearch);
+        colorSpinner = findViewById(R.id.colorSearch);
+        modelSpinner = findViewById(R.id.modelSearch);
+        mileageSpinner = findViewById(R.id.mileageSearch);
+        searchButton = findViewById(R.id.searchButton);
+
+
+        fAuth.signOut();
+        user = fAuth.getCurrentUser();
 
         query = fStore.collection("cars").orderBy("make", Query.Direction.DESCENDING);
 
-        FirestoreRecyclerOptions<Car> allCars = new FirestoreRecyclerOptions.Builder<Car>()
+        final FirestoreRecyclerOptions<Car> allCars = new FirestoreRecyclerOptions.Builder<Car>()
                 .setQuery(query, Car.class)
                 .build();
 
 
-
+        addCarFloat = findViewById(R.id.addCarFloat);
         carLists = findViewById(R.id.carList);
 
-//        make.add("Honda");
-//        make.add("Toyota");
-//        make.add("Audi");
-//
-//        model.add("CRV");
-//        model.add("Sienna");
-//        model.add("Q5");
-//
-//        price.add("$2000");
-//        price.add("$7000");
-//        price.add("$7000");
-//
-//        condition.add("Used");
-//        condition.add("Used");
-//        condition.add("Used");
-//
-//        year.add("2008");
-//        year.add("2007");
-//        year.add("2011");
-//
-//        mileage.add("210000");
-//        mileage.add("135000");
-//        mileage.add("200156");
-//
-//        color.add("Blue");
-//        color.add("Blue");
-//        color.add("Black");
-//
-//
-//        adapter = new Adapter(make, model, price, condition, year, mileage, color);
+
+        final Intent data = getIntent();
 
         carAdapter = new FirestoreRecyclerAdapter<Car, CarViewHolder>(allCars) {
+
+
             @Override
             protected void onBindViewHolder(@NonNull CarViewHolder carViewHolder, int i, @NonNull final Car car) {
-                carViewHolder.make.setText(car.getMake());
-                carViewHolder.model.setText(car.getModel());
-                carViewHolder.price.setText("$" + car.getPrice().toString());
-//        final int code = getRandomColor();
-//        holder.mCardView.setCardBackgroundColor(holder.view.getResources().getColor(code, null));
+                    carViewHolder.make.setText(car.getMake());
+                    carViewHolder.model.setText(car.getModel());
+                    carViewHolder.price.setText("$" + car.getPrice().toString());
 
-                carViewHolder.view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(v.getContext(), CarDetails.class);
-                        i.putExtra("make", car.getMake());
-                        i.putExtra("model", car.getModel());
-                        i.putExtra("price", car.getPrice());
-                        i.putExtra("condition", car.getColor());
-                        i.putExtra("year", car.getYear());
-                        i.putExtra("mileage", car.getMileage());
-                        i.putExtra("color", car.getColor());
-                        v.getContext().startActivity(i);
-                    }
-                });
+                    carViewHolder.view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(v.getContext(), CarDetails.class);
+                            i.putExtra("make", car.getMake());
+                            i.putExtra("model", car.getModel());
+                            i.putExtra("price", car.getPrice());
+                            i.putExtra("condition", car.getColor());
+                            i.putExtra("year", car.getYear());
+                            i.putExtra("mileage", car.getMileage());
+                            i.putExtra("color", car.getColor());
+                            v.getContext().startActivity(i);
+                        }
+                    });
+
+//                }
             }
 
             @NonNull
@@ -143,16 +161,29 @@ public class DealerActivity extends AppCompatActivity {
 
         carLists = findViewById(R.id.carList);
 
-        FloatingActionButton fab = findViewById(R.id.addCarFloat);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+        if (fAuth.getCurrentUser() == null) {
+            addCarFloat.setVisibility(View.GONE);
+        } else {
+            addCarFloat.setVisibility(View.VISIBLE);
+            addCarFloat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+        }
 
 
+
+
+    }
+
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 

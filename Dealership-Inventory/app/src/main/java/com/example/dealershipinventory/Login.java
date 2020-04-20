@@ -57,17 +57,17 @@ public class Login extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Set back button
 
 
-        showWarning();  //Warns user of possible loss of data before logging in
+//        showWarning();  //Warns user of possible loss of data before logging in
 
-        //OnClickListener for Create New Account link
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //start Register Activity
-                startActivity(new Intent(getApplicationContext(), Register.class));
-                finish();
-            }
-        }); //End of OnClickListener for Create New Account link
+//        //OnClickListener for Create New Account link
+//        registerLink.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //start Register Activity
+//                startActivity(new Intent(getApplicationContext(), Register.class));
+//                finish();
+//            }
+//        }); //End of OnClickListener for Create New Account link
 
 
 
@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));     //Start Main Activity
+                        startActivity(new Intent(getApplicationContext(), DealerActivity.class));     //Start Main Activity
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -161,26 +161,26 @@ public class Login extends AppCompatActivity {
     }   //END OF onCreate method
 
 
-    //Warns user of possible loss of data before logging in
-    private void showWarning() {
-        AlertDialog.Builder warning = new AlertDialog.Builder(this)
-                .setTitle("Are you sure?")
-                .setMessage("Logging in to Existing Account will delete all the temporary notes. Create New Account to Save them")
-                .setPositiveButton("Register", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getApplicationContext(), Register.class));
-                        finish();
-                    }
-                }).setNegativeButton("Login", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //do nothing
-                    }
-                }); //End of Alert Dialog
-
-        warning.show();
-    }
+//    //Warns user of possible loss of data before logging in
+//    private void showWarning() {
+//        AlertDialog.Builder warning = new AlertDialog.Builder(this)
+//                .setTitle("Are you sure?")
+//                .setMessage("Logging in to Existing Account will delete all the temporary notes. Create New Account to Save them")
+//                .setPositiveButton("Register", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        startActivity(new Intent(getApplicationContext(), Register.class));
+//                        finish();
+//                    }
+//                }).setNegativeButton("Login", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        //do nothing
+//                    }
+//                }); //End of Alert Dialog
+//
+//        warning.show();
+//    }
 
 
     //Shows cross symbol on top right corner
