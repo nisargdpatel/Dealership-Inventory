@@ -4,12 +4,14 @@ package com.example.dealershipinventory;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -30,7 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView carLists;         //List of Notes in Content Main
 
@@ -157,7 +159,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId())
+        {
+            default:
+                Toast.makeText(this, "Coming Soon.", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
