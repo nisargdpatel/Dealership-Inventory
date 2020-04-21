@@ -10,10 +10,6 @@
                 android:id="@+id/logout"
                 android:icon="@drawable/loginicon"
                 android:title="Logout"></item>
-            <item
-                android:id="@+id/signup"
-                android:icon="@drawable/signuplogo"
-                android:title="Sign Up" />
         </menu>
     </item>
 </menu>

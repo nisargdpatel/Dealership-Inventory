@@ -11,20 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity"></activity>
-        <activity
-            android:name=".DealerActivity"
-            android:label="@string/title_activity_dealer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".CarDetails" />
-        <activity android:name=".SearchActivty" />
-        <activity android:name=".Login">
+        <activity android:name=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar"
+            android:label="Cars For Sale"/>
+        <activity android:name=".CarDetails" />
+        <activity android:name=".edit_car" />
+        <activity android:name=".add_car" />
+        <activity android:name=".Login">
+
         </activity>
     </application>
 

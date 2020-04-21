@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class CarDetails extends AppCompatActivity {
@@ -23,14 +26,29 @@ public class CarDetails extends AppCompatActivity {
     FloatingActionButton editButton;
     FirebaseAuth fAuth;
 
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle toggle;
+    NavigationView nav_view;
+    Toolbar toolbar;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+//        drawerLayout = findViewById(R.id.drawer);
+//        nav_view = findViewById(R.id.nav_view);
+//        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+//        toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+
+
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.setDrawerIndicatorEnabled(true);
+//        toggle.syncState();
+
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         editButton = findViewById(R.id.editCarFloat);
         fAuth = FirebaseAuth.getInstance();
@@ -66,11 +84,16 @@ public class CarDetails extends AppCompatActivity {
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                Intent i = new Intent(view.getContext(), EditCar.class);
-//                i.putExtra("title", data.getStringExtra("title"));
-//                i.putExtra("content", data.getStringExtra("content"));
-//                i.putExtra("noteId", data.getStringExtra("noteId"));
-//                startActivity(i);
+                Intent i = new Intent(view.getContext(), edit_car.class);
+                i.putExtra("make", data.getStringExtra("make"));
+                i.putExtra("model", data.getStringExtra("model"));
+                i.putExtra("price", data.getStringExtra("price"));
+                i.putExtra("year", data.getStringExtra("year"));
+                i.putExtra("mileage", data.getStringExtra("mileage"));
+                i.putExtra("condition", data.getStringExtra("condition"));
+                i.putExtra("color", data.getStringExtra("color"));
+                i.putExtra("carId", data.getStringExtra("carId"));
+                startActivity(i);
                 }
             });
         }

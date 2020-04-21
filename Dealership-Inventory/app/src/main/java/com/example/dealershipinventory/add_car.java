@@ -1,7 +1,5 @@
 package com.example.dealershipinventory;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +10,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class add_car extends AppCompatActivity {
 
@@ -48,6 +58,10 @@ public class add_car extends AppCompatActivity {
     private EditText yearBuiltEditText;
     private EditText mileageEditText;
 
+    //Firebase Instance
+    FirebaseFirestore fStore;
+    FirebaseUser user;
+
 
     //To record user Choices
     String ChosenMake;
@@ -75,6 +89,8 @@ public class add_car extends AppCompatActivity {
         mileageEditText = findViewById(R.id.addmileageEdittext);
         errorFeed = findViewById(R.id.errorFeed);
 
+        fStore = FirebaseFirestore.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         makeList =  new ArrayList<String>();
         hondaMake = new ArrayList<String>();
@@ -86,8 +102,8 @@ public class add_car extends AppCompatActivity {
 
 
         //Assigning Condition Data
-        conditionList.add("New");
-        conditionList.add("Used");
+        conditionList.add("NEW");
+        conditionList.add("USED");
 
         //Assigning Color Data;
         colorList.add("BLUE");
@@ -215,16 +231,33 @@ public class add_car extends AppCompatActivity {
                 {
                     errorFeed.setText("");
                     //DATABASE STUFF
-                    //@NISARG
-                    //Once again, the variables you want to add are:
-                    // ChosenMake,
-                    // ChosenModel,
-                    // ChosenPrice,
-                    // ChosenYear,
-                    // ChosenMileage,
-                    // ChosenColor,
-                    // Chosen Condition
-                    //LASTLY CHANGE INTENT TO THE MAIN RECYCLER VIEW ACTIVITY
+
+
+                    DocumentReference docref = fStore.collection("cars").document();
+                    Map<String, Object> car = new HashMap<>();
+
+                    car.put("make", ChosenMake);
+                    car.put("model", ChosenModel);
+                    car.put("price", ChosenPrice);
+                    car.put("year", ChosenYear);
+                    car.put("mileage", ChosenMileage);
+                    car.put("color", ChosenColor);
+                    car.put("condition", ChosencarCondition);
+                    
+                    docref.set(car).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(add_car.this, "Car added", Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(add_car.this, "Error. Try Again", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
                 }
             }
         });

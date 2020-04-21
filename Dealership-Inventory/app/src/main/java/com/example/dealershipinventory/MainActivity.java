@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Query query;
     String docId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
+        user = fAuth.getCurrentUser();
 
         priceSpinner = findViewById(R.id.priceSearch);
         conditionSpinner = findViewById(R.id.conditionSearch);
@@ -75,15 +77,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         searchButton = findViewById(R.id.searchButton);
 
         toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+
+
         drawerLayout = findViewById(R.id.drawer);
         nav_view = findViewById(R.id.nav_view);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+
         drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
 
-
-        fAuth.signOut();
-        user = fAuth.getCurrentUser();
 
         query = fStore.collection("cars").orderBy("make", Query.Direction.DESCENDING);
 
@@ -96,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         carLists = findViewById(R.id.carList);
 
 
+
         final Intent data = getIntent();
 
         carAdapter = new FirestoreRecyclerAdapter<Car, CarViewHolder>(allCars) {
@@ -103,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             protected void onBindViewHolder(@NonNull CarViewHolder carViewHolder, int i, @NonNull final Car car) {
+
+                docId = carAdapter.getSnapshots().getSnapshot(i).getId();
+
                 carViewHolder.make.setText(car.getMake());
                 carViewHolder.model.setText(car.getModel());
                 carViewHolder.price.setText("$" + car.getPrice().toString());
@@ -118,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         i.putExtra("year", car.getYear());
                         i.putExtra("mileage", car.getMileage());
                         i.putExtra("color", car.getColor());
+                        i.putExtra("carId", docId);
                         v.getContext().startActivity(i);
                     }
                 });
@@ -147,22 +156,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             addCarFloat.setVisibility(View.VISIBLE);
             addCarFloat.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), add_car.class));
                 }
             });
         }
 
-
+    nav_view.setNavigationItemSelectedListener(this);
 
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        drawerLayout.closeDrawer(GravityCompat.START);
         switch(menuItem.getItemId())
         {
+            case R.id.login:
+                if(user == null)
+                {
+                    startActivity(new Intent(this, Login.class)); 
+                } else {
+                    Toast.makeText(this, "You are already logged in", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.logout:
+                if(user == null)
+                {
+                    Toast.makeText(this, "You are not logged in", Toast.LENGTH_SHORT).show();
+                } else {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
+                }
+                break;
             default:
                 Toast.makeText(this, "Coming Soon.", Toast.LENGTH_SHORT).show();
         }

@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
 
 
         //Set up Action Bar
-        getSupportActionBar().setTitle("Login to PostItNotes"); //Set title
+        getSupportActionBar().setTitle("Login to Dealership"); //Set title
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Set back button
 
 
@@ -141,8 +141,8 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), DealerActivity.class));     //Start Main Activity
-                        finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));     //Start Main Activity
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -187,7 +187,7 @@ public class Login extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //Go back to Main Activity when cross symbol clicked
-        startActivity(new Intent(this, MainActivity.class));
+//        startActivity(new Intent(this, HomeActivity.class));
         finish();
 
         return super.onOptionsItemSelected(item);
