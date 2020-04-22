@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dealership Inventory</string>
+    <string name="app_name">436 Dealer</string>
     <string name="title_activity_dealer">DealerActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

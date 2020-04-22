@@ -8,13 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -144,19 +140,15 @@ public class add_car extends AppCompatActivity {
                 {
                     case "HONDA":
                         fill_modelSpinner(hondaMake);
-                        Toast.makeText(getApplicationContext(), ChosenMake + " Selected", Toast.LENGTH_LONG).show();
                         break;
                     case "NISSAN":
                         fill_modelSpinner(nissanMake);
-                        Toast.makeText(getApplicationContext(), ChosenMake + " Selected", Toast.LENGTH_LONG).show();
                         break;
                     case "TOYOTA":
                         fill_modelSpinner(toyotaMake);
-                        Toast.makeText(getApplicationContext(), ChosenMake + " Selected", Toast.LENGTH_LONG).show();
                         break;
                     default:
                         fill_modelSpinner(defaultMake);
-                        Toast.makeText(getApplicationContext(), ChosenMake + " Selected", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -171,7 +163,6 @@ public class add_car extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ChosenModel =  parent.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), ChosenModel + " Selected", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -184,7 +175,6 @@ public class add_car extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ChosencarCondition =  parent.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), ChosencarCondition + " Selected", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -197,7 +187,6 @@ public class add_car extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ChosenColor =  parent.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), ChosenColor + " Selected", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -244,19 +233,8 @@ public class add_car extends AppCompatActivity {
                     car.put("color", ChosenColor);
                     car.put("condition", ChosencarCondition);
                     
-                    docref.set(car).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(add_car.this, "Car added", Toast.LENGTH_SHORT).show();
-                            onBackPressed();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(add_car.this, "Error. Try Again", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+                    new AddVehicles().execute(car);
+                    onBackPressed();
 
                 }
             }

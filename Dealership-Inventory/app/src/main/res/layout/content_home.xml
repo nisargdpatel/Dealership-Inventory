@@ -6,67 +6,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
-
-    <!--<androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="673dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />-->
 
     <RelativeLayout
         android:layout_width="409dp"
-        android:layout_height="673dp"
+        android:layout_height="0dp"
+        android:background="#DAD43A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
+            android:id="@+id/choiceTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="150dp"
             android:fontFamily="sans-serif-light"
-            android:textSize="20sp"
             android:gravity="center"
             android:text="What type of user are you?"
             android:textAllCaps="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="150dp"
-            android:id="@+id/choiceTitle"/>
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <Button
+            android:id="@+id/customerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
-            android:id="@+id/customerButton"
-            android:text="Customer"
-            android:fontFamily="sans-serif-condensed-light"
-            android:textSize="20sp"
             android:layout_below="@id/choiceTitle"
             android:layout_marginTop="50dp"
-            android:textColor="@android:color/white"/>
+            android:background="@android:color/holo_red_light"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="Customer"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
         <Button
+            android:id="@+id/dealerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
-            android:id="@+id/dealerButton"
             android:layout_below="@id/customerButton"
             android:layout_marginTop="50dp"
-            android:text="Dealer"
+            android:background="@android:color/holo_red_light"
             android:fontFamily="sans-serif-condensed-light"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"/>
+            android:text="Dealer"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

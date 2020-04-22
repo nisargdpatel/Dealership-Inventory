@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     Spinner priceSpinner, conditionSpinner, yearSpinner, makeSpinner, colorSpinner, modelSpinner, mileageSpinner;
     Button searchButton;
+    TextView navUser;
 
 
     FloatingActionButton addCarFloat;
@@ -76,6 +77,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mileageSpinner = findViewById(R.id.mileageSearch);
         searchButton = findViewById(R.id.searchButton);
 
+
+        nav_view = findViewById(R.id.nav_view);
+        headerView = nav_view.getHeaderView(0);
+        navUser = headerView.findViewById(R.id.navUsertype);
+
+        if(user != null) {
+            navUser.setText("Welcome Dealer");
+        } else {
+            navUser.setText("Welcome Customer");
+        }
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -100,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         carLists = findViewById(R.id.carList);
 
 
-
-        final Intent data = getIntent();
+//
+//        final Intent data = getIntent();
 
         carAdapter = new FirestoreRecyclerAdapter<Car, CarViewHolder>(allCars) {
 
@@ -122,12 +134,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         i.putExtra("make", car.getMake());
                         i.putExtra("model", car.getModel());
                         i.putExtra("price", car.getPrice());
-                        i.putExtra("condition", car.getColor());
+                        i.putExtra("condition", car.getCondition());
                         i.putExtra("year", car.getYear());
                         i.putExtra("mileage", car.getMileage());
                         i.putExtra("color", car.getColor());
                         i.putExtra("carId", docId);
                         v.getContext().startActivity(i);
+                        Toast.makeText(MainActivity.this, "DocId: " + docId, Toast.LENGTH_SHORT).show();
                     }
                 });
 
