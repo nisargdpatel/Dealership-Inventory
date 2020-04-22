@@ -56,22 +56,6 @@ public class Login extends AppCompatActivity {
         getSupportActionBar().setTitle("Login to Dealership"); //Set title
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Set back button
 
-
-//        showWarning();  //Warns user of possible loss of data before logging in
-
-//        //OnClickListener for Create New Account link
-//        registerLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //start Register Activity
-//                startActivity(new Intent(getApplicationContext(), Register.class));
-//                finish();
-//            }
-//        }); //End of OnClickListener for Create New Account link
-
-
-
-
         //OnClickListener for password reset link
         forgetLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +79,7 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(Login.this, "Reset Link Sent To Your Email", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                return;
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -156,31 +140,28 @@ public class Login extends AppCompatActivity {
         }); //End of OnClickListener for login button
 
 
+        registerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder warning = new AlertDialog.Builder(v.getContext());
+                warning.setTitle("Sorry!")
+                        .setMessage("Unauthorized Access. Contact Manager for Login Credentials Instead")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                warning.create().show();
+            }
+        });
 
 
     }   //END OF onCreate method
 
 
-//    //Warns user of possible loss of data before logging in
-//    private void showWarning() {
-//        AlertDialog.Builder warning = new AlertDialog.Builder(this)
-//                .setTitle("Are you sure?")
-//                .setMessage("Logging in to Existing Account will delete all the temporary notes. Create New Account to Save them")
-//                .setPositiveButton("Register", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        startActivity(new Intent(getApplicationContext(), Register.class));
-//                        finish();
-//                    }
-//                }).setNegativeButton("Login", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        //do nothing
-//                    }
-//                }); //End of Alert Dialog
-//
-//        warning.show();
-//    }
+
 
 
     //Shows cross symbol on top right corner

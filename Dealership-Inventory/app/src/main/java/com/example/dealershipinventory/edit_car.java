@@ -1,7 +1,4 @@
 package com.example.dealershipinventory;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -109,7 +109,7 @@ public class edit_car extends AppCompatActivity {
         fStore = fStore.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         data = getIntent();
-        docref = fStore.collection("cars").document(data.getStringExtra("carId"));
+
 
         //Passing in makeList Data
         fill_conditionSpinner(conditionList);
@@ -164,7 +164,8 @@ public class edit_car extends AppCompatActivity {
                 newYear = yearBuiltEditText.getText().toString();
                 newMileage = mileageEditText.getText().toString();
 
-
+                docref = fStore.collection("cars").document(data.getStringExtra("carId"));
+                Toast.makeText(getApplicationContext(), "DocId: " + data.getStringExtra("carId"), Toast.LENGTH_SHORT).show();
                 if(newPrice.equals("0"))
                 {
                     errorFeed.append("Error: You must choose a price greater than 0!\n");

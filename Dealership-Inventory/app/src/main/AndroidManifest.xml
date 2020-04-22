@@ -8,26 +8,26 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/dealer_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Welcome">
+            android:label="Welcome To 436 Car Dealership">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar"
-            android:label="Cars For Sale"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="Cars For Sale"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CarDetails" />
         <activity android:name=".edit_car" />
         <activity android:name=".add_car" />
-        <activity android:name=".Login">
-
-        </activity>
+        <activity android:name=".Login"
+            android:theme="@style/Theme.AppCompat"></activity>
     </application>
 
 </manifest>

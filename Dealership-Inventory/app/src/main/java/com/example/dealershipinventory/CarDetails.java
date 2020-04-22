@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -16,15 +17,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CarDetails extends AppCompatActivity {
 
     Intent data;
     FloatingActionButton editButton;
+    FloatingActionButton deleteButton;
     FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle toggle;
@@ -53,7 +60,10 @@ public class CarDetails extends AppCompatActivity {
         editButton = findViewById(R.id.editCarFloat);
         fAuth = FirebaseAuth.getInstance();
         data = getIntent();
+        Toast.makeText(this, "DocID: " + data.getStringExtra("carId"), Toast.LENGTH_SHORT).show();
+        fStore = FirebaseFirestore.getInstance();
 
+        deleteButton = findViewById(R.id.deleteCarFloat);
 
         TextView price = findViewById(R.id.price);
         TextView condition = findViewById(R.id.condition);
@@ -79,6 +89,7 @@ public class CarDetails extends AppCompatActivity {
         if (fAuth.getCurrentUser() == null)
         {
             editButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
         } else {
             editButton.setVisibility(View.VISIBLE);
             editButton.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +105,29 @@ public class CarDetails extends AppCompatActivity {
                 i.putExtra("color", data.getStringExtra("color"));
                 i.putExtra("carId", data.getStringExtra("carId"));
                 startActivity(i);
+                }
+            });
+
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DocumentReference docRef = fStore.collection("cars").document(data.getStringExtra("carId"));
+                    
+                    docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(CarDetails.this, "Car deleted", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CarDetails.this, "Error in Deleting Car", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
             });
         }
